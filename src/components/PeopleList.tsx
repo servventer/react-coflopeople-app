@@ -99,11 +99,12 @@ function PeopleList({ ListOfPeople, onDeletePerson, onUpdatePerson }: Props) {
         <tbody>
           {filteredPeople.map((person) => (
             <tr key={person.id}>
-              <td>{person.id}</td>
-              <td>
+              <td width="10%">{person.id}</td>
+              <td width="20%">
                 {editingPersonId === person.id ? (
                   <input
                     type="text"
+                    maxLength={255}
                     value={updatedPerson?.firstName}
                     onChange={(e) =>
                       setUpdatedPerson({
@@ -116,10 +117,11 @@ function PeopleList({ ListOfPeople, onDeletePerson, onUpdatePerson }: Props) {
                   person.firstName
                 )}
               </td>
-              <td>
+              <td width="20%">
                 {editingPersonId === person.id ? (
                   <input
                     type="text"
+                    maxLength={255}
                     value={updatedPerson?.lastName}
                     onChange={(e) =>
                       setUpdatedPerson({
@@ -132,7 +134,7 @@ function PeopleList({ ListOfPeople, onDeletePerson, onUpdatePerson }: Props) {
                   person.lastName
                 )}
               </td>
-              <td>
+              <td width="20%">
                 {editingPersonId === person.id ? (
                   <input
                     type="date"
@@ -145,11 +147,11 @@ function PeopleList({ ListOfPeople, onDeletePerson, onUpdatePerson }: Props) {
                     }
                   />
                 ) : (
-                  new Date(person.birthDate).toLocaleDateString()
+                  new Date(person.birthDate).toDateString()
                 )}
               </td>
-              <td>{person.age}</td>
-              <td>
+              <td width="10%">{person.age}</td>
+              <td width="20%">
                 {editingPersonId === person.id ? (
                   <button className="btn btn-primary" onClick={handleSave}>
                     Save

@@ -18,11 +18,18 @@ function App() {
   const [showModal, setShowModal] = useState(false); // Modal for Add Person
   const [loading, setLoading] = useState(true); // State to wait for Data from REST API
 
+  // setup the API URL
+  let apiUrl = "/PeopleManagement"; // will use the Proxy Config
+  if (import.meta.env.PROD) {
+    //use .env.production variables
+    apiUrl = import.meta.env.VITE_APP_API_BASE_URL;
+  }
+
   // Fetch the People List from the REST API
   useEffect(() => {
     const fetchPeople = async () => {
       try {
-        const response = await fetch("/PeopleManagement/api/person/getlist");
+        const response = await fetch(apiUrl + "/api/person/getlist");
         const data = await response.json();
         setPeople(data);
       } catch (error) {
@@ -44,7 +51,7 @@ function App() {
 
   // Handler Call the REST API to delete the person by ID
   const handleDeletePerson = async (id?: number) => {
-    let uri = "/PeopleManagement/api/person/delete/" + id;
+    let uri = apiUrl + "/api/person/delete/" + id;
     const response = await fetch(uri, {
       method: "DELETE",
     });
@@ -61,7 +68,7 @@ function App() {
 
   // Handler Call the REST API to UPDATE the person by ID
   const handleUpdatePerson = async (updatedPerson: Person) => {
-    const response = await fetch("/PeopleManagement/api/person/update", {
+    const response = await fetch(apiUrl + "/api/person/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

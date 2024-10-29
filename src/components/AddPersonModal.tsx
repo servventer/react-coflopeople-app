@@ -24,8 +24,15 @@ function AddPersonModal({ onAddPerson, onClose }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // setup the API URL
+    let apiUrl = "/PeopleManagement"; // will use the Proxy Config
+    if (import.meta.env.PROD) {
+      //use .env.production variables
+      apiUrl = import.meta.env.VITE_APP_API_BASE_URL;
+    }
+
     // Call the REST API to add the person
-    const response = await fetch("/PeopleManagement/api/person/create", {
+    const response = await fetch(apiUrl + "/api/person/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,6 +69,7 @@ function AddPersonModal({ onAddPerson, onClose }: Props) {
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
+                maxLength={255}
                 placeholder="First Name"
                 value={newPerson.firstName}
                 onChange={(e) =>
@@ -72,6 +80,7 @@ function AddPersonModal({ onAddPerson, onClose }: Props) {
               />
               <input
                 type="text"
+                maxLength={255}
                 placeholder="Last Name"
                 value={newPerson.lastName}
                 onChange={(e) =>
